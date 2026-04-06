@@ -30,7 +30,12 @@ export default function App() {
         setAnalysis(result);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      if (message.includes('API_KEY')) {
+        setError('API Key is missing or invalid. Please check your Vercel Environment Variables.');
+      } else {
+        setError(message);
+      }
     } finally {
       setIsLoading(false);
     }
